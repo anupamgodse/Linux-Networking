@@ -3,6 +3,6 @@
 while true
 do
   sleep 3600
-  rm -f load.csv load_alerts.csv
+  rm -f $HOME/load.csv $HOME/load_alerts.csv
 done
   

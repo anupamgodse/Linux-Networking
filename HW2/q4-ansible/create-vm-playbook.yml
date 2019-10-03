@@ -1,0 +1,15 @@
+---
+- hosts: [local]
+
+- name: install libvirt
+  apt:
+    name: libvirt-python, ovs-vsctl
+    state: present
+
+
+# Create a bridge named br-int
+- openvswitch_bridge:
+    bridge: yjkamdar-netl3
+    state: present
+
+  

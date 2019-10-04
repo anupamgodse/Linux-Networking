@@ -1,15 +1,16 @@
 ---
-- hosts: [local]
+- name: Ansible test
+  hosts: [localhost]
 
-- name: install libvirt
-  apt:
-    name: libvirt-python, ovs-vsctl
-    state: present
+  tasks:
+    - name: install libvirt
+      apt:
+        name: libvirt-python, ovs-vsctl
+        state: present
 
-
-# Create a bridge named br-int
-- openvswitch_bridge:
-    bridge: yjkamdar-netl3
-    state: present
+  # Create a bridge named br-int
+    - openvswitch_bridge:
+        bridge: yjkamdar-netl3
+        state: present
 
   

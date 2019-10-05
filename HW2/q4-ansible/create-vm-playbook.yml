@@ -18,7 +18,7 @@
 
     - name: Install VM1
       become: yes
-      command: virt-clone --original sampleVM -n yjkamdarVM2 --auto-clone
+      command: virt-clone --original sampleVM -n yjkamdarVM1 --auto-clone
       ignore_errors: yes
 
     - name: Install VM2

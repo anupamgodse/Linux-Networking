@@ -3,11 +3,12 @@
   hosts: [localhost]
   user: root
   vars:
-    packages: [qemu-kvm,libvirt-bin,ubuntu-vm-builder,bridge-utils,openvswitch-switch,libxml2-dev,libxslt-dev,python-dev,python3-lxml]
+    packages: [qemu-kvm,libvirt-bin,ubuntu-vm-builder,bridge-utils,openvswitch-switch,libxml2-dev,libxslt-dev,python-dev,python-lxml]
 
   tasks:
     - name: install packages
-      apt-get:
+      apt:
+        force_apt_get: yes
         name: "{{ packages }}"
         state: present
 
@@ -38,8 +39,14 @@
         command: start
         state: running
 
-    - virt_net:
-      command: list_nets
+    - name: List networks
+      virt_net:
+        command: list_nets
+      register: yashlist
+    
+    - debug:
+        var: yashlist
+        verbosity: 2
       #sudo virt-clone --original VM2 -n VM3 --auto-clone
       # - name: Create VM2 from VM1
       #become: yes

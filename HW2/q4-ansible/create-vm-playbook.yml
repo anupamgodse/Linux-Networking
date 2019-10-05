@@ -3,11 +3,11 @@
   hosts: [localhost]
   user: root
   vars:
-    packages: [qemu-kvm,libvirt-bin,ubuntu-vm-builder,bridge-utils,openvswitch-switch]
+    packages: [qemu-kvm,libvirt-bin,ubuntu-vm-builder,bridge-utils,openvswitch-switch,libxml2-dev,libxslt-dev,python-dev,python3-lxml]
 
   tasks:
     - name: install packages
-      apt:
+      apt-get:
         name: "{{ packages }}"
         state: present
 
@@ -31,14 +31,15 @@
         name: yjkamdarVM1
         command: start
         state: running
-        uri: 'lxc:///'
 
     - name: Start VM2
       virt:
         name: yjkamdarVM2
         command: start
         state: running
-        uri: 'lxc:///'
+
+    - virt_net:
+      command: list_nets
       #sudo virt-clone --original VM2 -n VM3 --auto-clone
       # - name: Create VM2 from VM1
       #become: yes

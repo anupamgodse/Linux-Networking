@@ -18,19 +18,18 @@
 
     - name: Install VM1
       become: yes
-      command: virt-install -n yjkamdarVM1 -r 2048 --vcpu=4 --cpu host --disk path=/var/lib/libvirt/images/yjkamdarVM1.img,size=10 --network network=default -c /home/ece792/CentOS-7-x86_64-Minimal-1708.iso -v --noautoconsole --wait -1
+      command: virt-clone --original sampleVM -n yjkamdarVM2 --auto-clone
       ignore_errors: yes
-
-    - name: Suspend VM1 for cloning
-      become: yes
-      command: virsh shutdown yjkamdarVM1
 
     - name: Install VM2
       become: yes
-      command: virt-clone --original yjkamdarVM1 -n yjkamdarVM2 --auto-clone
-    - name: Resume VM1 for cloning
+      command: virt-clone --original sampleVM -n yjkamdarVM2 --auto-clone
+
+    - name: Start VM1 and VM2
       become: yes
-      command: virsh start yjkamdarVM1
+      command: |
+        virsh start yjkamdarVM1
+        virsh start yjkamdarVM2
 
       #sudo virt-clone --original VM2 -n VM3 --auto-clone
       # - name: Create VM2 from VM1

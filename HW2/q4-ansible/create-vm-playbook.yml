@@ -1,11 +1,14 @@
 ---
 - name: Ansible test
   hosts: [localhost]
+  user: root
+  vars:
+    packages: [qemu-kvm,libvirt-bin,ubuntu-vm-builder,bridge-utils,openvswitch-switch]
 
   tasks:
-    - name: install libvirt
+    - name: install packages
       apt:
-        name: libvirt-python, ovs-vsctl
+        name: "{{ packages }}"
         state: present
 
   # Create a bridge named br-int
@@ -13,4 +16,12 @@
         bridge: yjkamdar-netl3
         state: present
 
-  
+    - name: Install VM1
+      become: yes
+      command: virt-install -n yjkamdarVM1 -r 2048 --vcpu=4 --cpu host --disk path=/var/lib/libvirt/images/yjkamdarVM1.img,size=10 --network network=default -c /home/ece792/CentOS-7-x86_64-Minimal-1708.iso -v --noautoconsole --wait -1
+
+
+
+      # - name: Create VM2 from VM1
+      #become: yes
+      #command: sudo virt-clone --original yjkamdarVM1 -n yjkamdarVM2 --auto-clone 

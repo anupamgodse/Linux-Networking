@@ -29,12 +29,14 @@
     - name: Start VM1
       virt:
         name: yjkamdarVM1
+        command: start
         state: running
         uri: 'lxc:///'
 
     - name: Start VM2
       virt:
         name: yjkamdarVM2
+        command: start
         state: running
         uri: 'lxc:///'
       #sudo virt-clone --original VM2 -n VM3 --auto-clone

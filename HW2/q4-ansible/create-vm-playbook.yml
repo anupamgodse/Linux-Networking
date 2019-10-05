@@ -23,14 +23,14 @@
 
     - name: Suspend VM1 for cloning
       become: yes
-      command: virsh suspend yjkamdarVM1
+      command: virsh shutdown yjkamdarVM1
 
     - name: Install VM2
       become: yes
       command: virt-clone --original yjkamdarVM1 -n yjkamdarVM2 --auto-clone
     - name: Resume VM1 for cloning
       become: yes
-      command: virsh resume yjkamdarVM1
+      command: virsh start yjkamdarVM1
 
       #sudo virt-clone --original VM2 -n VM3 --auto-clone
       # - name: Create VM2 from VM1

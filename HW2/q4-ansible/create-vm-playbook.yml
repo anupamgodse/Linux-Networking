@@ -24,13 +24,19 @@
     - name: Install VM2
       become: yes
       command: virt-clone --original sampleVM -n yjkamdarVM2 --auto-clone
+      ignore_errors: yes
 
-    - name: Start VM1 and VM2
-      become: yes
-      command: |
-        virsh start yjkamdarVM1
-        virsh start yjkamdarVM2
+    - name: Start VM1
+      virt:
+      name: yjkamdarVM1
+      state: running
+      uri: 'lxc:///'
 
+    - name: Start VM2
+      virt:
+      name: yjkamdarVM2
+      state: running
+      uri: 'lxc:///'
       #sudo virt-clone --original VM2 -n VM3 --auto-clone
       # - name: Create VM2 from VM1
       #become: yes

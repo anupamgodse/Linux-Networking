@@ -2,13 +2,12 @@
 - name: Ansible test
   hosts: [localhost]
   user: root
-  vars:
-    packages: [qemu-kvm,libvirt-bin,ubuntu-vm-builder,bridge-utils,openvswitch-switch,libxml2-dev,libxslt-dev,python-dev,python-lxml]
-
+  vars_files:
+    - vars/config.yml"
+    
   tasks:
     - name: install packages
       apt:
-        force_apt_get: yes
         name: "{{ packages }}"
         state: present
 
@@ -24,7 +23,7 @@
 
     - name: Install VM2
       become: yes
-      command: virt-clone --original sampleVM -n yjkamdarVM2 --auto-clone
+      command: virt-clone --original yjkamdarVM1 -n yjkamdarVM2 --auto-clone
       ignore_errors: yes
 
     - name: Start VM1
@@ -39,14 +38,13 @@
         command: start
         state: running
 
-    - name: List networks
-      virt_net:
-        command: list_nets
-      register: yashlist
-    
-    - debug:
-        var: yashlist
-        verbosity: 2
+    - virt_net:
+      command: list_nets
+
+    - virt_net:
+        command: define
+        name: yjkamdar-netl3
+        xml: '{{ lookup("template", "network/bridge.xml.j2") }}'
       #sudo virt-clone --original VM2 -n VM3 --auto-clone
       # - name: Create VM2 from VM1
       #become: yes

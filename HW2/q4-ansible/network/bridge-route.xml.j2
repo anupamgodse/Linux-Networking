@@ -1,0 +1,10 @@
+<network>
+  <name>net3</name>
+  <bridge name=’sw3’/>
+  <virtualport type=’openvswitch’/>
+  <forward mode="route"/>
+  <ip address="10.0.1.1" netmask="255.255.255.0">
+  <dhcp>
+    <range start="10.0.1.2" end="10.0.1.254"/>
+  </dhcp>
+</network>

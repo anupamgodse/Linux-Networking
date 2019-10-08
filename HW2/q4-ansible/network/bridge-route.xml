@@ -1,0 +1,10 @@
+<network>
+  <name>yjkamdar-netl3</name>
+  <bridge name="net-l3_br1"/>
+  <virtualport type="openvswitch"/>
+  <forward mode="route"/>
+  <ip address="10.0.1.1" netmask="255.255.255.0"/>
+  <dhcp>
+    <range start="10.0.1.2" end="10.0.1.254"/>
+  </dhcp>
+</network>

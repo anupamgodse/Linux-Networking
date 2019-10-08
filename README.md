@@ -9,9 +9,24 @@ $ sudo apt install ansible
 
 
 Run playbook:
-ansible-playbook create-vm-playbook.yml
+sudo ansible-playbook create-vm-playbook.yml -i inventory/
+sudo ansible-playbook load-avg-playbook.yml -i inventory/ --extra-vars "ssh_pass=xxxx"
 
 
 
 
 ssh -Y ece792@192.168.122.71
+
+
+///OVS
+Create network
+Attach to VM
+Assign IP
+Configure DHCP
+
+Run dhclient manually
+
+<ip address="10.10.0.1" netmask="255.255.255.0">
+<dhcp>
+<range start="10.10.0.2" end="10.10.0.254"/>
+</dhcp>

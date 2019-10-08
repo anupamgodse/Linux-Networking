@@ -1,5 +1,5 @@
 ---
-- name: Ansible test
+- name: Ansible create VM playbook
   hosts: [localhost]
   user: root
   vars_files:
@@ -70,13 +70,7 @@
       become: yes 
 
     - name: Create DHCP server for the bridge
-      command: "sudo dnsmasq --interface={{ ovs_network.br_name }} --except-interface=lo --bind-interfaces --dhcp-range=10.10.0.2,10.10.0.254,12h"
+      command: "sudo dnsmasq --interface={{ ovs_network.br_name }} --dhcp-range=10.10.0.2,10.10.0.254,12h --bind-interfaces"
       ignore_errors: true
       become: yes
-    # - virt_net:
-    #   command: list_nets
 
-      #sudo virt-clone --original VM2 -n VM3 --auto-clone
-      # - name: Create VM2 from VM1
-      #become: yes
-      #command: sudo virt-clone --original yjkamdarVM1 -n yjkamdarVM2 --auto-clone 

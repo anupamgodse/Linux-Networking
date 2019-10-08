@@ -1,0 +1,9 @@
+---
+- name: Get Load averages playbook
+  hosts: hosts
+  user: root
+  vars_files:
+    - vars/config.yml
+
+  tasks:
+    - ping:

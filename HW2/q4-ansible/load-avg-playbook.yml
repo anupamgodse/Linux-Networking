@@ -25,4 +25,4 @@
         dest: "{{ SCRIPT_PATH }}/log_loads.sh"
 
     - name: Store curr load average
-      command: "./{{ SCRIPT_PATH }}/log_loads.sh {{ TP }}"
+      command: "sh {{ SCRIPT_PATH }}/log_loads.sh {{ TP }}"

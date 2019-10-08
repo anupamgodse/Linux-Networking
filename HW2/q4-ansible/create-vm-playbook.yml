@@ -3,7 +3,7 @@
   hosts: [localhost]
   user: root
   vars_files:
-    - vars/config.yml"
+    - vars/config.yml
     
   tasks:
     - name: install packages
@@ -12,9 +12,27 @@
         state: present
 
   # Create a bridge named br-int
-    - openvswitch_bridge:
-        bridge: yjkamdar-netl3
+    - name: Create an OVS bridge
+      openvswitch_bridge:
+        bridge: "{{ ovs_network.br_name }}"
         state: present
+    - name: Define OVS network
+      virt_net:
+        command: define
+        name: {{ ovs_network.name }}
+        xml: '{{ lookup("template", "network/bridge.xml.j2") }}'
+    - name: Create OVS network
+      virt_net:
+        command: create
+        name: "{{ ovs_network.name }}"
+      become: yes
+      ignore_errors: true
+
+    - name: Convert bridge to an L3 network
+      command: "ifconfig {{ ovs_network.br_name }} 10.10.0.1/24"
+      ignore_errors: true
+      become: yes 
+
 
     - name: Install VM1
       become: yes
@@ -41,10 +59,6 @@
     - virt_net:
       command: list_nets
 
-    - virt_net:
-        command: define
-        name: yjkamdar-netl3
-        xml: '{{ lookup("template", "network/bridge.xml.j2") }}'
       #sudo virt-clone --original VM2 -n VM3 --auto-clone
       # - name: Create VM2 from VM1
       #become: yes

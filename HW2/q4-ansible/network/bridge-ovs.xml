@@ -1,0 +1,6 @@
+<network>
+  <name>{{ ovs_network.name }}</name>
+  <bridge name="{{ ovs_network.br_name }}"/>
+  <virtualport type="openvswitch"/>
+  <forward mode="bridge"/>
+</network>

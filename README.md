@@ -11,3 +11,7 @@ $ sudo apt install ansible
 Run playbook:
 ansible-playbook create-vm-playbook.yml
 
+
+
+
+ssh -Y ece792@192.168.122.71

@@ -72,6 +72,7 @@ for domainID in domainIDs:
 
 while(1):
     time.sleep(interval)
+    mov_avg = dict()
     for domainID in domainIDs:
         dom = conn.lookupByID(domainID)
         if dom == None:
@@ -81,9 +82,9 @@ while(1):
         windows[dom.name()].append(get_stats(usage_type))
         if(lw == window_size):
             windows[dom.name()].pop(0)
-
-        print(dom.name() + " " + usage_type + " moving avg = ", sum(windows[dom.name()]) / len(windows[dom.name()]))
-            
+        mov_avg[dom.name()]=sum(windows[dom.name()]) / len(windows[dom.name()])
+        #print(dom.name() + " " + usage_type + " moving avg = ", sum(windows[dom.name()]) / len(windows[dom.name()]))
+    print(usage_type+" moving averages "+sorted(mov_avg.items(), key=operator.itemgetter(1)))        
 
 conn.close()
 exit(0)

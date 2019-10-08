@@ -84,7 +84,8 @@ while(1):
             windows[dom.name()].pop(0)
         mov_avg[dom.name()]=sum(windows[dom.name()]) / len(windows[dom.name()])
         #print(dom.name() + " " + usage_type + " moving avg = ", sum(windows[dom.name()]) / len(windows[dom.name()]))
-    print(usage_type+" moving averages "+sorted(mov_avg.items(), key=operator.itemgetter(1)))        
+    print("\n"+usage_type+" moving averages:")
+    print(sorted(mov_avg.items(), key=operator.itemgetter(1)))        
 
 conn.close()
 exit(0)

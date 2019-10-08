@@ -1,6 +1,6 @@
 ---
 - name: Get Load averages playbook
-  hosts: hosts
+  hosts: all
   user: root
   vars_files:
     - vars/config.yml

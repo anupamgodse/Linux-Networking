@@ -21,9 +21,9 @@
         command: define
         name: {{ ovs_network.name }}
         xml: '{{ lookup("template", "network/bridge.xml.j2") }}'
-    - name: Create OVS network
+    - name: Start OVS network
       virt_net:
-        command: create
+        command: start
         name: "{{ ovs_network.name }}"
       become: yes
       ignore_errors: true

@@ -9,8 +9,8 @@ $ sudo apt install ansible
 
 
 Run playbook:
-sudo ansible-playbook create-vm-playbook.yml -i inventory/
-sudo ansible-playbook load-avg-playbook.yml -i inventory/ --extra-vars "ssh_pass=xxxx"
+sudo ansible-playbook create-vm-playbook.yml -i inventory/hosts.yml
+sudo ansible-playbook load-avg-playbook.yml -i inventory/hosts.yml
 
 
 

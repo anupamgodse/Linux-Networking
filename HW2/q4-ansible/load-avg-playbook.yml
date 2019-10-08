@@ -4,6 +4,19 @@
   user: root
   vars_files:
     - vars/config.yml
-
+  vars:
+    - LOG_PATH: /var/customlogs/logs
+    - SCRIPT_PATH: /var/customlogs/scripts
   tasks:
     - ping:
+
+    - name: Clear previous logs
+      command: "rm -f {{ LOG_PATH }}/load.csv {{ LOG_PATH }}/load_alerts.csv"
+
+    - name: Copy load average script
+      template: 
+        src: scripts/log_loads.sh
+        dest: "{{ SCRIPT_PATH }}/log_loads.sh"
+
+    - name: Store curr load average
+      command: "./{{ SCRIPT_PATH }}/log_loads.sh {{ TP }}"

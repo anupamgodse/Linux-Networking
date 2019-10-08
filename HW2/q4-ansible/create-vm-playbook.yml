@@ -42,14 +42,6 @@
       command: virt-clone --original {{ VM[0] }} -n {{ VM[1] }} --auto-clone
       ignore_errors: yes
 
-    - name: Attach interface to VM1
-      command: virsh attach-interface --domain {{ VM[0] }} --type network --source {{ ovs_network.name }} --model virtio --config --live
-      become: yes
-    
-    - name: Attach interface to VM2
-      command: virsh attach-interface --domain {{ VM[1] }} --type network --source {{ ovs_network.name }} --model virtio --config --live
-      become: yes
-
     - name: Start VM1
       virt:
         name: "{{ VM[0] }}"
@@ -63,6 +55,14 @@
         command: start
         state: running
       ignore_errors: true
+
+    - name: Attach interface to VM1
+      command: virsh attach-interface --domain {{ VM[0] }} --type network --source {{ ovs_network.name }} --model virtio --config --live
+      become: yes
+    
+    - name: Attach interface to VM2
+      command: virsh attach-interface --domain {{ VM[1] }} --type network --source {{ ovs_network.name }} --model virtio --config --live
+      become: yes
 
     - name: Assign IP to bridge
       command: "ifconfig {{ ovs_network.br_name }} 10.10.0.1/24"

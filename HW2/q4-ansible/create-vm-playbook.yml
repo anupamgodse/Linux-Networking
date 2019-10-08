@@ -43,11 +43,11 @@
       ignore_errors: yes
 
     - name: Attach interface to VM1
-      command: attach-interface --domain {{ VM[0] }} --type bridge --source {{ ovs_network.br_name }} --model virtio --config --live
+      command: attach-interface --domain {{ VM[0] }} --type network --source {{ ovs_network.name }} --model virtio --config --live
       become: yes
     
     - name: Attach interface to VM2
-      command: attach-interface --domain {{ VM[1] }} --type bridge --source {{ ovs_network.br_name }} --model virtio --config --live
+      command: attach-interface --domain {{ VM[1] }} --type network --source {{ ovs_network.name }} --model virtio --config --live
       become: yes
 
     - name: Start VM1

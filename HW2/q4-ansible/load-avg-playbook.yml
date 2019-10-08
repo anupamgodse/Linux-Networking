@@ -10,6 +10,12 @@
   tasks:
     - ping:
 
+    - name: Ensures {{LOG_PATH}} dir exists
+      file: path={{LOG_PATH}} state=directory
+
+    - name: Ensures {{SCRIPT_PATH}} dir exists
+      file: path={{SCRIPT_PATH}} state=directory
+
     - name: Clear previous logs
       command: "rm -f {{ LOG_PATH }}/load.csv {{ LOG_PATH }}/load_alerts.csv"
 

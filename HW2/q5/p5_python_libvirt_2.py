@@ -3,6 +3,8 @@ import libvirt
 from xml.dom import minidom
 
 domName = 'angodseVM1'
+if len(sys.argv) >= 2:
+    domName=sys.argv[1]
 
 conn = libvirt.open('qemu:///system')
 if conn == None:

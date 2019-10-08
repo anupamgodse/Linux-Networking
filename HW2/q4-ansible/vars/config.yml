@@ -3,3 +3,5 @@ packages: [qemu-kvm,libvirt-bin,ubuntu-vm-builder,bridge-utils,openvswitch-switc
 ovs_network:
   name: yjkamdar-netl3
   br_name: netl3-br
+
+VM: [yjkamdarVM1,yjkamdarVM2]

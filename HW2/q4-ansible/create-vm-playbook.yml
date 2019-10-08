@@ -33,11 +33,14 @@
       ignore_errors: true
       become: yes 
 
-
     - name: Install VM1
       become: yes
       command: virt-clone --original sampleVM -n yjkamdarVM1 --auto-clone
       ignore_errors: yes
+
+    - name: Attach interface to VM1
+      command: attach-interface --domain yjkamdarVM1 --type bridge --source {{ ovs_network.br_name }} --model virtio --config --live
+      become: yes
 
     - name: Install VM2
       become: yes

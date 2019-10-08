@@ -2,6 +2,7 @@
 Linux Networking Assignments
 
 
+Below are the steps followed to run the programs for Question 4 & 5
 
 ## Question 4) Ansible
 
@@ -21,5 +22,10 @@ sudo ansible-playbook load-avg-playbook.yml -i inventory/hosts.yml  --extra-vars
 Command: `python3 p5_python_libvirt_1.py`
 
 #### 2) Guest Information:   
-Command: `python3 p5_python_libvirt_1.py <VM_NAME>`
-e.g. python3 p5_python_libvirt_1.py angodseVM1
+Command: `python3 p5_python_libvirt_2.py <VM_NAME>`
+e.g. python3 p5_python_libvirt_2.py yjkamdarVM1
+
+#### 2) Performance monitoring:   
+Command: `python3 p5_python_libvirt_3.py <USAGE_TYPE>`
+Usage types: CPU, MEM
+e.g. python3 p5_python_libvirt_3.py CPU

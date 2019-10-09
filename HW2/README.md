@@ -25,7 +25,7 @@ Command: `python3 p5_python_libvirt_1.py`
 Command: `python3 p5_python_libvirt_2.py <VM_NAME>`
 e.g. python3 p5_python_libvirt_2.py yjkamdarVM1
 
-#### 2) Performance monitoring:   
+#### 3) Performance monitoring:   
 Command: `python3 p5_python_libvirt_3.py <USAGE_TYPE>`
 Usage types: CPU, MEM
 e.g. python3 p5_python_libvirt_3.py CPU

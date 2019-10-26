@@ -1,0 +1,31 @@
+packages: [qemu-kvm,libvirt-bin,ubuntu-vm-builder,bridge-utils,openvswitch-switch,libxml2-dev,libxslt-dev,python-dev,python-lxml]
+
+ovs_networks:
+  - name: internet-sw1
+    type: internet
+    mode: nat
+    br_name: sw1
+    range: 10.10.10.2,10.10.10.254
+    ip: 10.10.10.1/24
+  - name: l2-sw2
+    type: l2
+    mode: bridge
+    br_name: sw2
+  - name: l3-sw3
+    type: l3
+    mode: routed
+    br_name: sw3
+    range: 10.10.11.2,10.10.11.254
+    ip: 10.10.11.1/24
+  - name: other-sw
+    type: other
+    mode: routed
+    br_name: sw4
+    range: 10.10.12.2,10.10.12.254
+    ip: 10.10.12.1/24
+
+VMs: 
+  - name: VM1-yk
+    networks: [internet-sw1,l2-sw2]
+  - name: VM2-yk
+    networks: [public-net,l2-sw2]

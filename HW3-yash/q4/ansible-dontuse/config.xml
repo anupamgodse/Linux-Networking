@@ -1,0 +1,21 @@
+packages: [qemu-kvm,libvirt-bin,ubuntu-vm-builder,bridge-utils,openvswitch-switch,libxml2-dev,libxslt-dev,python-dev,python-lxml]
+
+ovs_networks:
+  - name: public-net
+    br_name: netl3-br0
+    range: 192.10.0.2,192.10.0.254
+    ip: 192.10.0.1/24
+  - name: private-net
+    br_name: netl3-br1
+    range: 10.10.0.2,10.10.0.254
+    ip: 10.10.0.1/24
+
+VMs: 
+  - name: cvm
+    networks: [public-net]
+  - name: rvm
+    networks: [public-net,private-net]
+  - name: svm1
+    networks: [private-net]
+  - name: svm2
+    networks: [private-net]

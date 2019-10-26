@@ -1,0 +1,68 @@
+---
+- name: Ansible create VM playbook
+  hosts: [localhost]
+  user: root
+  vars_files:
+    - vars/config.yml
+    
+  tasks:
+    - name: install packages
+      apt:
+        name: "{{ packages }}"
+        state: present
+
+  # Create a bridge named br-int
+    - name: Create an OVS bridge
+      openvswitch_bridge:
+        bridge: "{{ item.br_name }}"
+        state: present
+      become: yes
+      loop: "{{ ovs_networks }}"
+
+    - name: Define OVS network
+      virt_net:
+        command: define
+        name: "{{ item.name }}"
+        xml: '{{ lookup("template", "network/bridge-ovs.xml") }}'
+      become: yes
+      loop: "{{ ovs_networks }}"
+
+    - name: Start OVS network
+      virt_net:
+        command: start
+        name: "{{ item.name }}"
+      become: yes
+      loop: "{{ ovs_networks }}"
+    
+    - name: Install all VMs
+      become: yes
+      command: virt-clone --original sampleVM -n {{ item.name }} --auto-clone
+      ignore_errors: yes
+      loop: "{{ VMs }}"
+
+    - name: Start all VMs
+      virt:
+        name: "{{ item.name }}"
+        command: start
+        state: running
+      ignore_errors: true
+      loop: "{{ VMs }}"
+
+    - name: Attach interface to VM1
+      command: virsh attach-interface --domain {{ item.0.name }} --type network --source {{ item.1 }} --model virtio --config --live
+      become: yes
+      with_subelements: 
+        - "{{ VMs }}"
+        - networks
+
+    - name: Assign IP to bridge
+      command: "ifconfig {{ item.br_name }} {{ item.ip }}"
+      ignore_errors: true
+      become: yes
+      loop: "{{ ovs_networks }}"
+
+    - name: Create DHCP server for the bridge
+      command: "sudo dnsmasq --interface={{ item.br_name }} --dhcp-range={{ item.range }},12h --bind-interfaces"
+      ignore_errors: true
+      become: yes
+      loop: "{{ ovs_networks }}"

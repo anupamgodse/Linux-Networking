@@ -26,6 +26,6 @@ ovs_networks:
 
 VMs: 
   - name: VM1-yk
-    networks: [internet-sw1,l2-sw2]
+    networks: [internet-sw1,l3-sw3]
   - name: VM2-yk
-    networks: [public-net,l2-sw2]
+    networks: [internet-sw1,l3-sw3]

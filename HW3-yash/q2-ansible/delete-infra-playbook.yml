@@ -56,8 +56,8 @@
 
     - name: Delete all VMs
       virt:
-        name: "{{ item.name }}"
-        command: destroy
+        name: "{{ item.name }}" --remove-all-storage
+        command: undefine
         state: destroyed
       ignore_errors: true
       loop: "{{ VMs }}"

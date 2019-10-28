@@ -73,6 +73,13 @@
       ignore_errors: yes
       loop: "{{ VMs }}"
 
+    - name: Attach interface to VM1
+      command: virsh attach-interface --domain {{ item.0.name }} --type network --source {{ item.1 }} --model virtio --config --live
+      become: yes
+      with_subelements: 
+        - "{{ VMs }}"
+        - networks
+
     - name: Start all VMs
       virt:
         name: "{{ item.name }}"
@@ -80,12 +87,5 @@
         state: running
       ignore_errors: true
       loop: "{{ VMs }}"
-
-    - name: Attach interface to VM1
-      command: virsh attach-interface --domain {{ item.0.name }} --type network --source {{ item.1 }} --model virtio --config --live
-      become: yes
-      with_subelements: 
-        - "{{ VMs }}"
-        - networks
     
     

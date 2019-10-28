@@ -67,18 +67,39 @@
       become: yes
 
 # VM configuration: creating, starting and attaching interfaces
+
+# # defining and launching an LXC guest
+#     - name: Configure vm xml
+#       script: scripts/generate_vm.py
+#       args:
+#         executable: python3
+#       loop: "{{ VMs }}"
+
+#     - name: define vm
+#       virt:
+#         command: define
+#         xml: "{{ lookup('template', '{{item.name}}-template.xml.j2') }}"
+#         uri: 'lxc:///'
+#       loop: "{{ VMs }}"
+      
+#     - name: start vm
+#       virt:
+#         name: "{{ item.name }}"
+#         state: running
+#         uri: 'lxc:///'
+#       loop: "{{ VMs }}"
+
+#     # setting autostart on a qemu VM (default uri)
+#     - name: set autostart for a VM
+#       virt:
+#         name: foo
+#         autostart: yes
+
     - name: Install all VMs
       become: yes
       command: virt-clone --original sampleVM -n {{ item.name }} --auto-clone
       ignore_errors: yes
       loop: "{{ VMs }}"
-
-    - name: Attach interface to VM1
-      command: virsh attach-interface --domain {{ item.0.name }} --type network --source {{ item.1 }} --model virtio --config --live
-      become: yes
-      with_subelements: 
-        - "{{ VMs }}"
-        - networks
 
     - name: Start all VMs
       virt:
@@ -87,5 +108,12 @@
         state: running
       ignore_errors: true
       loop: "{{ VMs }}"
+
+    - name: Attach interface to VM1
+      command: virsh attach-interface --domain {{ item.0.name }} --type network --source {{ item.1 }} --model virtio --config --live
+      become: yes
+      with_subelements: 
+        - "{{ VMs }}"
+        - networks
     
     

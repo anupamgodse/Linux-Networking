@@ -57,7 +57,6 @@
       virt:
         name: "{{ item.name }}"
         command: undefine
-        state: destroyed
       ignore_errors: true
       loop: "{{ VMs }}"
 

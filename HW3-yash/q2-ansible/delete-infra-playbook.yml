@@ -27,14 +27,16 @@
         name: "{{ item.name }}"
         state: inactive
       become: yes
+      ignore_errors: true
       loop: "{{ ovs_networks }}"
-    - name: UnDefine OVS network
+    - name: Undefine OVS network
       virt_net:
         command: undefine
         state: absent
         name: "{{ item.name }}"
         xml: '{{ lookup("template", "network/bridge-ovs.xml") }}'
       become: yes
+      ignore_errors: true
       loop: "{{ ovs_networks }}"
 
 #Configure NAT for networks with mode=nat
@@ -66,5 +68,6 @@
         bridge: "{{ item.br_name }}"
         state: absent
       become: yes
+      ignore_errors: true
       loop: "{{ ovs_networks }}"
     

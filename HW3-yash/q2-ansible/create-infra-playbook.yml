@@ -37,14 +37,14 @@
 
 # Configure DHCP for routed/nat mode networks
     - name: Assign IP to bridge
-      command: "ip addr add {{ item.ip }} dev {{ item.br_name }} "
+      command: "ifconfig {{ item.br_name }} {{ item.ip }}"
       ignore_errors: true
       become: yes
       loop: "{{ ovs_networks }}"
       when: item.mode=="routed" or item.mode=="nat"
 
     - name: Create DHCP server for the bridge
-      command: "sudo dnsmasq --interface={{ item.br_name }} --dhcp-range={{ item.range }},12h --bind-dynamic"
+      command: "dnsmasq --interface={{ item.br_name }} --dhcp-range={{ item.range }},12h --bind-interfaces --except-interface=lo"
       ignore_errors: true
       become: yes
       loop: "{{ ovs_networks }}"
@@ -57,7 +57,7 @@
         table: nat
         chain: POSTROUTING
         out_interface: "{{ item.br_name }}"
-        source: '{{ item.ip }}'
+        source: "{{ item.ip }}"
         jump: MASQUERADE
         protocol: icmp
         comment: NAT network enable MASQUERADE
@@ -68,36 +68,9 @@
 
 # VM configuration: creating, starting and attaching interfaces
 
-# # defining and launching an LXC guest
-#     - name: Configure vm xml
-#       script: scripts/generate_vm.py
-#       args:
-#         executable: python3
-#       loop: "{{ VMs }}"
-
-#     - name: define vm
-#       virt:
-#         command: define
-#         xml: "{{ lookup('template', '{{item.name}}-template.xml.j2') }}"
-#         uri: 'lxc:///'
-#       loop: "{{ VMs }}"
-      
-#     - name: start vm
-#       virt:
-#         name: "{{ item.name }}"
-#         state: running
-#         uri: 'lxc:///'
-#       loop: "{{ VMs }}"
-
-#     # setting autostart on a qemu VM (default uri)
-#     - name: set autostart for a VM
-#       virt:
-#         name: foo
-#         autostart: yes
-
     - name: Install all VMs
       become: yes
-      command: virt-clone --original sampleVM -n {{ item.name }} --auto-clone
+      command: "virt-clone --original sampleVM -n {{ item.name }} --auto-clone"
       ignore_errors: yes
       loop: "{{ VMs }}"
 
@@ -110,7 +83,7 @@
       loop: "{{ VMs }}"
 
     - name: Attach interface to VM1
-      command: virsh attach-interface --domain {{ item.0.name }} --type network --source {{ item.1 }} --model virtio --config --live
+      command: "virsh attach-interface --domain {{ item.0.name }} --type network --source {{ item.1 }} --model virtio --config --live"
       become: yes
       with_subelements: 
         - "{{ VMs }}"

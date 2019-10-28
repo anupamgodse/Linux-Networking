@@ -10,9 +10,17 @@
       apt:
         name: "{{ packages }}"
         state: present
-        
-# Define the network in bridge mode and start the ovs network infra
 
+# VM configuration: creating, starting and attaching interfaces
+    - name: Shutdown all VMs
+      virt:
+        name: "{{ item.name }}"
+        command: shutdown
+        state: shutdown
+      ignore_errors: true
+      loop: "{{ VMs }}"        
+
+# Define the network in bridge mode and start the ovs network infra
     - name: Stop OVS network
       virt_net:
         command: stop
@@ -45,18 +53,9 @@
       ignore_errors: true
       become: yes
 
-# VM configuration: creating, starting and attaching interfaces
-    - name: Shutdown all VMs
+    - name: Undefine all VMs
       virt:
         name: "{{ item.name }}"
-        command: shutdown
-        state: shutdown
-      ignore_errors: true
-      loop: "{{ VMs }}"
-
-    - name: Delete all VMs
-      virt:
-        name: "{{ item.name }}" --remove-all-storage
         command: undefine
         state: destroyed
       ignore_errors: true

@@ -33,4 +33,5 @@ VMs:
     vcpu: 2
   - name: VM2-yk
     networks: [Internet-yk,L2-yk]
+    ram: 2097152
     vcpu: 2

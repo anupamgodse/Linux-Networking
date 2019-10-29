@@ -67,4 +67,4 @@
       become: yes
 
 - name: Define and create VMs
-  import_playbook: playbooks/create-vms.yml --extra-vars config=vars/vm_config.yml
+  import_playbook: playbooks/create-vms.yml --extra-vars @vm_config.yml

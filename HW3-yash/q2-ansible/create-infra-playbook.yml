@@ -56,10 +56,9 @@
       iptables:
         table: nat
         chain: POSTROUTING
-        out_interface: "{{ item.br_name }}"
+        destination: "!{{ item.ip }}"
         source: "{{ item.ip }}"
         jump: MASQUERADE
-        protocol: icmp
         comment: NAT network enable MASQUERADE
       loop: "{{ ovs_networks }}"
       when: item.mode=="nat"
@@ -67,12 +66,6 @@
       become: yes
 
 # VM configuration: creating, starting and attaching interfaces
-
-    # - name: Install all VMs
-    #   become: yes
-    #   command: "virt-clone --original sampleVM -n {{ item.name }} --auto-clone"
-    #   ignore_errors: yes
-    #   loop: "{{ VMs }}"
 
     - name: Copy sample image
       copy:
@@ -102,12 +95,5 @@
       with_subelements: 
         - "{{ VMs }}"
         - networks
-    
-    - name: Restart DNSMASQ
-      service:
-        name: dnsmasq
-        state: restarted
-        enabled: yes
-      become: yes
 
     

@@ -2,6 +2,8 @@
 - name: Ansible create VM playbook
   hosts: [localhost]
   user: root
+  vars_files:
+    - "{{ config }}"
 
   tasks:
 # VM configuration: creating, starting and attaching interfaces

@@ -4,6 +4,7 @@
   user: root
   vars_files:
     - vars/nw_config.yml
+    - vars/vm_config.yml
     
   tasks:
     - name: install packages
@@ -66,4 +67,4 @@
       become: yes
 
 - name: Define and create VMs
-  import_playbook: create-vms.yml --extra-vars @vars/vm_config.yml
+  import_playbook: create-vms.yml --extra-vars

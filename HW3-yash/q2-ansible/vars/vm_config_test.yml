@@ -1,0 +1,5 @@
+VMs: 
+  - name: VM1-yk
+    networks: [Internet-yk,L2-yk]
+  - name: VM2-yk
+    networks: [Internet-yk,L2-yk]

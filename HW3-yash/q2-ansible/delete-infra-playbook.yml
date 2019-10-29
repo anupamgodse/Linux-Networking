@@ -61,6 +61,13 @@
         command: undefine
       ignore_errors: true
       loop: "{{ VMs }}"
+    
+    - name: Remove VM storages
+      file:
+        name: "/var/lib/libvirt/images/{{ item.name }}.img"
+        state: absent
+      ignore_errors: true
+      loop: "{{ VMs }}"
 
 # Create the required ovs bridges
     - name: Delete an OVS bridge

@@ -7,7 +7,7 @@
 # VM configuration: creating, starting and attaching interfaces
     - name: Copy sample image
       copy:
-        src: "{{ sample_image }}"
+        src: "{{ sample_image | default('/var/lib/libvirt/images/sampleVM.img')}}"
         dest: "/var/lib/libvirt/images/{{ item.name }}.img"
       loop: "{{ VMs }}"
 

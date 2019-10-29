@@ -29,6 +29,7 @@
       become: yes
       ignore_errors: true
       loop: "{{ ovs_networks }}"
+      
     - name: Undefine OVS network
       virt_net:
         command: undefine
@@ -61,6 +62,7 @@
         command: undefine
       ignore_errors: true
       loop: "{{ VMs }}"
+      become: yes
     
     - name: Remove VM storages
       file:
@@ -68,6 +70,7 @@
         state: absent
       ignore_errors: true
       loop: "{{ VMs }}"
+      become: yes
 
 # Create the required ovs bridges
     - name: Delete an OVS bridge

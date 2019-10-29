@@ -82,7 +82,7 @@
 
     - name: Define a VM
       virt:
-        name: "{{ new1_VM_name }}"
+        name: "{{ item.name }}"
         command: define
         xml: "{{ lookup('template', 'vm_template/sampleVM.xml.j2' ) }}"
         uri: 'qemu:///system'

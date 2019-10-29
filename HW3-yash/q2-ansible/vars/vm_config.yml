@@ -1,0 +1,11 @@
+sample_image: /var/lib/libvirt/images/sampleVM.img
+
+VMs: 
+  - name: VM1-yk
+    networks: [Internet-yk,L2-yk]
+    ram: 2097152
+    vcpu: 2
+  - name: VM2-yk
+    networks: [Internet-yk,L2-yk]
+    ram: 2097152
+    vcpu: 2

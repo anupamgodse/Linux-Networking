@@ -1,7 +1,5 @@
 packages: [qemu-kvm,libvirt-bin,ubuntu-vm-builder,bridge-utils,openvswitch-switch,libxml2-dev,libxslt-dev,python-dev,python-lxml,dnsmasq]
 
-sample_image: /var/lib/libvirt/images/sampleVM.img
-
 ovs_networks:
   - name: Internet-yk
     type: internet
@@ -25,13 +23,3 @@ ovs_networks:
     br_name: sw4-yk
     range: 10.10.12.2,10.10.12.254
     ip: 10.10.12.1/24
-
-VMs: 
-  - name: VM1-yk
-    networks: [Internet-yk,L2-yk]
-    ram: 2097152
-    vcpu: 2
-  - name: VM2-yk
-    networks: [Internet-yk,L2-yk]
-    ram: 2097152
-    vcpu: 2

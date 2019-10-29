@@ -68,10 +68,24 @@
 
 # VM configuration: creating, starting and attaching interfaces
 
-    - name: Install all VMs
-      become: yes
-      command: "virt-clone --original sampleVM -n {{ item.name }} --auto-clone"
-      ignore_errors: yes
+    # - name: Install all VMs
+    #   become: yes
+    #   command: "virt-clone --original sampleVM -n {{ item.name }} --auto-clone"
+    #   ignore_errors: yes
+    #   loop: "{{ VMs }}"
+
+    - name: Copy sample image
+      copy:
+        src: "{{ sample_image }}"
+        dest: "/var/lib/libvirt/images/{{ item.name }}.img"
+      loop: "{{ VMs }}"
+
+    - name: Define a VM
+      virt:
+        name: "{{ new1_VM_name }}"
+        command: define
+        xml: "{{ lookup('template', 'vm_template/sampleVM.xml.j2' ) }}"
+        uri: 'qemu:///system'
       loop: "{{ VMs }}"
 
     - name: Start all VMs
@@ -89,4 +103,11 @@
         - "{{ VMs }}"
         - networks
     
+    - name: Restart DNSMASQ
+      service:
+        name: dnsmasq
+        state: restarted
+        enabled: yes
+      become: yes
+
     

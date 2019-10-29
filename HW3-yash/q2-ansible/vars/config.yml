@@ -1,33 +1,36 @@
-packages: [qemu-kvm,libvirt-bin,ubuntu-vm-builder,bridge-utils,openvswitch-switch,libxml2-dev,libxslt-dev,python-dev,python-lxml]
+packages: [qemu-kvm,libvirt-bin,ubuntu-vm-builder,bridge-utils,openvswitch-switch,libxml2-dev,libxslt-dev,python-dev,python-lxml,dnsmasq]
+
+sample_image: /var/lib/libvirt/images/sampleVM.img
 
 ovs_networks:
-  - name: internet-sw1
+  - name: Internet-yk
     type: internet
     mode: nat
-    br_name: sw1
+    br_name: sw1-yk
     range: 10.10.10.2,10.10.10.254
     ip: 10.10.10.1/24
-  - name: l2-sw2
+  - name: L2-yk
     type: l2
     mode: bridge
-    br_name: sw2
-  - name: l3-sw3
+    br_name: sw2-yk
+  - name: L3-yk
     type: l3
     mode: routed
-    br_name: sw3
+    br_name: sw3-yk
     range: 10.10.11.2,10.10.11.254
     ip: 10.10.11.1/24
-  - name: other-sw
+  - name: Other-yk
     type: other
     mode: routed
-    br_name: sw4
+    br_name: sw4-yk
     range: 10.10.12.2,10.10.12.254
     ip: 10.10.12.1/24
 
 VMs: 
   - name: VM1-yk
-    networks: [internet-sw1,l2-sw2]
-    memory: 2097152
+    networks: [Internet-yk,L2-yk]
+    ram: 2097152
+    vcpu: 2
   - name: VM2-yk
-    networks: [internet-sw1,l2-sw2]
-    memory: 2097152
+    networks: [Internet-yk,L2-yk]
+    vcpu: 2

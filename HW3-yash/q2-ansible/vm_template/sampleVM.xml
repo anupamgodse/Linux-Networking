@@ -9,7 +9,7 @@ or other application using the libvirt API.
   <name>{{ item.name }}</name>
   <memory unit='KiB'>{{ item.ram }}</memory>
   <currentMemory unit='KiB'>{{ item.ram }}</currentMemory>
-  <vcpu placement='static'>2</vcpu>
+  <vcpu placement='static'>{{ item.vcpu }}</vcpu>
   <os>
     <type arch='x86_64' machine='pc-i440fx-bionic'>hvm</type>
     <boot dev='hd'/>
@@ -86,7 +86,6 @@ or other application using the libvirt API.
     <channel type='unix'>
       <target type='virtio' name='org.qemu.guest_agent.0'/>
       <address type='virtio-serial' controller='0' bus='0' port='1'/>
-      <source mode='bind' path='/var/lib/libvirt/qemu/f16x86_64.agent'/>
     </channel>
     <channel type='spicevmc'>
       <target type='virtio' name='com.redhat.spice.0'/>

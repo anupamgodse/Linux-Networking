@@ -15,8 +15,8 @@
     - name: Shutdown all VMs
       virt:
         name: "{{ item.name }}"
-        command: shutdown
-        state: shutdown
+        command: destroy
+        state: destroyed
       ignore_errors: true
       loop: "{{ VMs }}"        
 

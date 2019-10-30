@@ -28,9 +28,9 @@ conn = libvirt.open('qemu:///system')
 if conn == None:
     print('Failed to open connection to qemu:///system', file=sys.stderr)
     exit(1)
-domainIDs = conn.listDomainsID()
-VMinfo=dict()
-if domainIDs == None:
-    print('Failed to get a list of domain IDs', file=sys.stderr)
-for id in domainIDs:
-    loadInfo(id)
+# domainIDs = conn.listDomainsID()
+# VMinfo=dict()
+# if domainIDs == None:
+#     print('Failed to get a list of domain IDs', file=sys.stderr)
+# #for id in domainIDs:
+loadInfo(121)

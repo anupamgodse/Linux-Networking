@@ -96,10 +96,3 @@
       with_subelements: 
         - "{{ VMs }}"
         - networks
-
-    - name: Fetch VM IPs
-      command: python fetch_ip.py {{ item.name }}
-      set_fact:
-        _append_dict: "{ '{{ item.guest_ip }}': {{ some_value }} }"
-      ignore_errors: true
-      loop: "{{ VMs }}"

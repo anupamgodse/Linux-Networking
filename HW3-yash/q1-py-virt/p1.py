@@ -2,6 +2,10 @@
 import sys
 import libvirt
 
+def printInf(VMinfo):
+    for i in sorted (VMinfo.keys()) :  
+        print(i, end = " ")
+
 def loadInfo(domainID):
     dom = conn.lookupByID(domainID)
     currInfo=dict()
@@ -24,7 +28,6 @@ def loadInfo(domainID):
             else:
                 interfaces[name]={'mac_address':mac_address,'ip_address':None}
 
-    currInfo['id']=domainID
     currInfo['name']=dom.name()
     currInfo['interfaces']=interfaces
     VMinfo[domainID]=currInfo
@@ -42,7 +45,7 @@ if domainIDs == None:
 for dom_id in domainIDs:
     try:
         loadInfo(dom_id)
-    except:
+    except Exception as e:
         pass
-        
-print(VMinfo)
+printInfo(VMinfo)
+

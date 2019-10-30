@@ -2,9 +2,11 @@
 import sys
 import libvirt
 
-def printInf(VMinfo):
-    for i in sorted (VMinfo.keys()) :  
-        print(i, end = " ")
+def printInfo(VMinfo):
+    for vm in sorted (VMinfo.keys()) :  
+        print(VMinfo[vm]['name'])
+        for iface in VMinfo[vm]['name'].keys():
+            print(iface,VMinfo[vm][iface])
 
 def loadInfo(domainID):
     dom = conn.lookupByID(domainID)

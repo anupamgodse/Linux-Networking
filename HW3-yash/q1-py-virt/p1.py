@@ -34,7 +34,7 @@ if conn == None:
 domainIDs = conn.listDomainsID()
 VMinfo=dict()
 if domainIDs == None:
-    print('Failed to get a list of domain IDs', file=sys.stderr)
+    print('Failed to get a list of domain IDs')
 for dom_id in domainIDs:
     try:
         loadInfo(dom_id)

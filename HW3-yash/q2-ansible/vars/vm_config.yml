@@ -1,4 +1,4 @@
-sample_image: /var/lib/libvirt/images/sampleVM.img
+sample_image: /var/lib/libvirt/images/sampleBuild.img
 
 VMs: 
   - name: VM1-yk

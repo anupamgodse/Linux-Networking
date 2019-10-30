@@ -12,16 +12,19 @@ def loadInfo(domainID):
 
     for (name, val) in ifaces.iteritems():
         mac_address=val['hwaddr']
+        
         ip_address=None
         if val['addrs']:
             for ipaddr in val['addrs']:
                 if ipaddr['type'] == libvirt.VIR_IP_ADDR_TYPE_IPV4:
                     ip_address=ipaddr['addr']
-        if ip_address:
-            interfaces[name]={'mac_address':mac_address,'ip_address':ip_address}
-        else:
-            interfaces[name]={'mac_address':mac_address,'ip_address':None}
+        if(mac_address!='00:00:00:00:00:00'):
+            if ip_address:
+                interfaces[name]={'mac_address':mac_address,'ip_address':ip_address}
+            else:
+                interfaces[name]={'mac_address':mac_address,'ip_address':None}
 
+    currInfo['id']=domainID
     currInfo['name']=dom.name()
     currInfo['interfaces']=interfaces
     VMinfo[domainID]=currInfo
@@ -33,11 +36,13 @@ if conn == None:
     exit(1)
 domainIDs = conn.listDomainsID()
 VMinfo=dict()
+MACs=[]
 if domainIDs == None:
     print('Failed to get a list of domain IDs')
 for dom_id in domainIDs:
     try:
         loadInfo(dom_id)
     except:
-        print("An exception occurred")
+        pass
+        
 print(VMinfo)

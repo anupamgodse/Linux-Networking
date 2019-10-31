@@ -16,3 +16,8 @@ For Remote hypervisors:
 Make sure to have the ssh private key in your system that can access the hypervisor
 e.g. python resolve_conflict.py ece792@192.168.122.71,user@anotherIP
 
+
+
+Side note:
+Script to reset MAC address of a VM
+python test_resetMac.py VM2-yk eth1 52:54:00:02:02:02

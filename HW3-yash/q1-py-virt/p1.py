@@ -8,8 +8,11 @@ import random
 def resetMac(domName,iface,curr_mac):
     dom = conn.lookupByName(domName)
     dom_xml = dom.XMLDesc(0)
-    new_mac="52:54:00:%02x:%02x:%02x" % (random.randint(0, 255),random.randint(0, 255),random.randint(0, 255))
-
+    new_mac=None
+    while 1==1:
+        new_mac="52:54:00:%02x:%02x:%02x" % (random.randint(0, 255),random.randint(0, 255),random.randint(0, 255))
+        if new_mac not in MACs:
+            break;
     xml_root = ET.XML(dom_xml)
     interfaces = xml_root.find('devices').findall('interface')
     for interface in interfaces:
@@ -25,6 +28,8 @@ def resetMac(domName,iface,curr_mac):
     conn.defineXML(xml_str)
     if dom.isActive() != True: 
         dom.create()
+        print('Sleeping for mac reset. New Mac assigned as: '+new_mac)
+        time.sleep(20)
 
 def resolveConflicts(VMinfo):
     for vm in sorted (VMinfo.keys()) :
@@ -32,10 +37,12 @@ def resolveConflicts(VMinfo):
         for iface in interfaces.keys():
             curr_mac=interfaces[iface]['mac_address']
             if curr_mac in MACs:
-                new_mac=resetMac(VMinfo[vm]['name'],iface,curr_mac)
-                interfaces[iface]['mac_address']=new_mac
-            else:
-                MACs.append(curr_mac)
+                print('Found a duplicate mac for '+VMinfo[vm]['name']+' interface '+iface+' mac: '+curr_mac)
+                print('Resetting...')
+                curr_mac=resetMac(VMinfo[vm]['name'],iface,curr_mac)
+                interfaces[iface]['mac_address']=curr_mac
+                print('Resetting complete.')
+            MACs.append(curr_mac)
 
 def printInfo(VMinfo):
     for vm in sorted (VMinfo.keys()) :  
@@ -43,13 +50,13 @@ def printInfo(VMinfo):
         interfaces=VMinfo[vm]['interfaces']
         for iface in interfaces.keys():
             print(iface,interfaces[iface])
+        print
 
 def loadInfo(domainID):
     dom = conn.lookupByID(domainID)
     currInfo=dict()
     interfaces=dict()
     domName=dom.name()
-    
     ifaces=[]
     try:
         ifaces = dom.interfaceAddresses(libvirt.VIR_DOMAIN_INTERFACE_ADDRESSES_SRC_AGENT, 0)
@@ -59,7 +66,6 @@ def loadInfo(domainID):
 
     for (name, val) in ifaces.iteritems():
         mac_address=val['hwaddr']
-        
         ip_address=None
         if val['addrs']:
             for ipaddr in val['addrs']:
@@ -70,10 +76,10 @@ def loadInfo(domainID):
                 interfaces[name]={'mac_address':mac_address,'ip_address':ip_address}
             else:
                 interfaces[name]={'mac_address':mac_address,'ip_address':None}
-
-    currInfo['name']=dom.name()
-    currInfo['interfaces']=interfaces
-    VMinfo[domainID]=currInfo
+    if interfaces:
+        currInfo['name']=dom.name()
+        currInfo['interfaces']=interfaces
+        VMinfo[domainID]=currInfo
 
 def libvirt_callback(userdata, err):
     pass
@@ -90,7 +96,8 @@ if domainIDs == None:
     print('Failed to get a list of domain IDs')
 for dom_id in domainIDs:
     loadInfo(dom_id)
+
+print('Listing all MAC, IPs for each interface of all VMs')
 printInfo(VMinfo)
 resolveConflicts(VMinfo)
-printInfo(VMinfo)
 

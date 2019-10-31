@@ -1,9 +1,3 @@
-Steps to run:
-python p1.py
-python p2.py
-
-
-
 Notes:Ensure Guest-agent is installed in all VMs, if not then install using
 yum install qemu-guest-agent
 
@@ -12,4 +6,13 @@ virsh qemu-agent-command VM1-yk '{"execute":"guest-network-get-interfaces"}'
 
 Another approach would be to fetch the IP from the dnsmasq leases file on the hypervisor (/var/lib/misc/dnsmasq.leases),
 but my approach would fetch even the static IPs set in the guest VM.
+
+Steps to run:
+
+Local hypervisor:
+python resolve_conflict.py
+
+For Remote hypervisors:
+Make sure to have the ssh private key in your system that can access the hypervisor
+e.g. python resolve_conflict.py ece792@192.168.122.71,user@anotherIP
 

@@ -1,0 +1,6 @@
+<network>
+  <name>{{ item.name }}</name>
+  <bridge name="{{ item.br_name }}"/>
+  <virtualport type="openvswitch"/>
+  <forward mode="bridge"/>
+</network>

@@ -1,0 +1,142 @@
+---
+- name: Ansible create VM playbook
+  hosts: [localhost]
+  user: root
+  vars_files:
+    - vars/config.yml
+    
+  tasks:
+    - name: install packages
+      apt:
+        name: "{{ packages }}"
+        state: present
+
+  # Create a bridge named br-int
+    - name: Create an OVS bridge
+      openvswitch_bridge:
+        bridge: "{{ ovs_network[0].br_name }}"
+        state: present
+      become: yes
+      ignore_errors: true
+    - name: Define OVS network
+      virt_net:
+        command: define
+        name: "{{ ovs_network[0].name }}"
+        xml: '{{ lookup("template", "network/bridge-ovs.xml") }}'
+      become: yes
+      ignore_errors: true
+    - name: Start OVS network
+      virt_net:
+        command: start
+        name: "{{ ovs_network[0].name }}"
+      become: yes
+      ignore_errors: true
+
+    - name: Create an OVS bridge2
+      openvswitch_bridge:
+        bridge: "{{ ovs_network[1].br_name }}"
+        state: present
+      become: yes
+      ignore_errors: true
+    - name: Define OVS network2
+      virt_net:
+        command: define
+        name: "{{ ovs_network[1].name }}"
+        xml: '{{ lookup("template", "network/bridge-ovs.xml") }}'
+      become: yes
+      ignore_errors: true
+    - name: Start OVS network2
+      virt_net:
+        command: start
+        name: "{{ ovs_network[1].name }}"
+      become: yes
+      ignore_errors: true
+
+    - name: Install VM1
+      become: yes
+      command: virt-clone --original sampleVM -n {{ VM[0] }} --auto-clone
+      ignore_errors: yes
+
+    - name: Install VM2
+      become: yes
+      command: virt-clone --original {{ VM[0] }} -n {{ VM[1] }} --auto-clone
+      ignore_errors: yes
+
+    - name: Install VM3
+      become: yes
+      command: virt-clone --original sampleVM -n {{ VM[2] }} --auto-clone
+      ignore_errors: yes
+
+    - name: Install VM4
+      become: yes
+      command: virt-clone --original {{ VM[0] }} -n {{ VM[3] }} --auto-clone
+      ignore_errors: yes
+
+    - name: Start VM1
+      virt:
+        name: "{{ VM[0] }}"
+        command: start
+        state: running
+      ignore_errors: true
+
+    - name: Start VM2
+      virt:
+        name: "{{ VM[1] }}"
+        command: start
+        state: running
+      ignore_errors: true
+
+    - name: Start VM3
+      virt:
+        name: "{{ VM[2] }}"
+        command: start
+        state: running
+      ignore_errors: true
+
+    - name: Start VM4
+      virt:
+        name: "{{ VM[3] }}"
+        command: start
+        state: running
+      ignore_errors: true
+
+    - name: Attach interface1 to VM1
+      command: virsh attach-interface --domain {{ VM[0] }} --type network --source {{ ovs_network[0].name }} --model virtio --config --live
+      become: yes
+    
+    - name: Attach interface1 to VM2
+      command: virsh attach-interface --domain {{ VM[1] }} --type network --source {{ ovs_network[0].name }} --model virtio --config --live
+      become: yes
+
+    - name: Attach interface2 to VM2
+      command: virsh attach-interface --domain {{ VM[1] }} --type network --source {{ ovs_network[1].name }} --model virtio --config --live
+      become: yes
+
+    - name: Attach interface2 to VM3
+      command: virsh attach-interface --domain {{ VM[2] }} --type network --source {{ ovs_network[1].name }} --model virtio --config --live
+      become: yes
+    
+    - name: Attach interface2 to VM4
+      command: virsh attach-interface --domain {{ VM[3] }} --type network --source {{ ovs_network[1].name }} --model virtio --config --live
+      become: yes
+
+    - name: Assign IP to bridge
+      command: "ifconfig {{ ovs_network[0].br_name }} 192.10.0.1/24"
+      ignore_errors: true
+      become: yes 
+
+    - name: Create DHCP server for the bridge
+      command: "sudo dnsmasq --interface={{ ovs_network[0].br_name }} --dhcp-range=192.10.0.2,192.10.0.254,12h --bind-interfaces"
+      ignore_errors: true
+      become: yes
+
+    - name: Assign IP to bridge2
+      command: "ifconfig {{ ovs_network[1].br_name }} 10.10.0.1/24"
+      ignore_errors: true
+      become: yes 
+
+    - name: Create DHCP server for the bridge
+      command: "sudo dnsmasq --interface={{ ovs_network[1].br_name }} --dhcp-range=10.10.0.2,10.10.0.254,12h --bind-interfaces"
+      ignore_errors: true
+      become: yes
+

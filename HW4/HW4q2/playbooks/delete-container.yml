@@ -1,0 +1,14 @@
+---
+- name: Delete docker container playbook
+  hosts: [localhost]
+  user: root
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+    default_container_image: ubuntu
+    
+  tasks:
+    - name: Delete basic docker container
+      docker_container:
+        name: "{{ c_name }}"
+        image: "{{ default_container_image }}"
+        state: absent

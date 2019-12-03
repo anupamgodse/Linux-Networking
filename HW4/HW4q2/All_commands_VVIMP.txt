@@ -1,0 +1,118 @@
+sudo ansible-playbook -i hosts playbooks/create-bridge.yml -e 'b_name=brns1 l_name=LC1 ip=19.1.1.1/24 range=19.1.1.2,19.1.1.254'
+
+sudo ansible-playbook -i hosts playbooks/create-bridge.yml -e 'b_name=brns2 l_name=LC2 ip=19.1.2.1/24 range=19.1.2.2,19.1.2.254'
+
+sudo ansible-playbook -i hosts playbooks/create-bridge.yml -e 'b_name=brns3 l_name=LC2'
+
+
+sudo ip link add CS1_brns1 type veth peer name brns1_CS1
+sudo ip link set CS1_brns1 netns CS1
+sudo ip netns exec CS1 ip link set CS1_brns1 up
+sudo ip link set brns1_CS1 netns brns1
+sudo ip netns exec brns1 brctl addif brns1_br brns1_CS1
+sudo ip netns exec brns1 ip link set brns1_CS1 up
+sudo ip netns exec CS1 dhclient CS1_brns1
+
+
+19.1.1.0/24
+
+ip route add default scope global \
+    nexthop via 172.20.0.3 weight 1 \
+    nexthop via 172.19.0.3 weight 1
+
+ip route add default scope global nexthop via 172.21.0.3 weight 1 
+
+
+ nexthop via 172.22.0.3 weight 1
+
+
+
+sudo docker inspect SC1 -f {{.NetworkSettings.Networks.LC1_SC1.IPAddress}}
+
+
+
+sudo ansible-playbook -i hosts playbooks/create-bridge.yml -e 'b_name=brns1 ip=19.1.1.1/24 range=19.1.1.2,19.1.1.254'
+
+sudo ansible-playbook -i hosts playbooks/create-bridge.yml -e 'b_name=brns2 ip=19.1.2.1/24 range=19.1.2.2,19.1.2.254'
+
+
+sudo ansible-playbook -i hosts playbooks/connect-l3.yml -e 'c_name_1=brns1 c_name_2=LC1'
+
+sudo ansible-playbook -i hosts playbooks/connect-l2.yml -e 'b_name=brns1 c_name=CS1'
+
+
+sudo ansible-playbook -i hosts playbooks/create-container.yml -e 'c_name=CS5'
+
+
+
+##### STart here
+#brns1
+sudo python3 scripts/create_subnet.py brns1 LC1 19.1.1.0/24
+sudo ansible-playbook -i hosts playbooks/create-container.yml -e 'c_name=CS1'
+sudo ansible-playbook -i hosts playbooks/connect-l2.yml -e 'b_name=brns1 c_name=CS1 br_ip=19.1.1.1'
+
+
+#brns2
+sudo python3 scripts/create_subnet.py brns2 LC2 19.1.2.0/24
+sudo ansible-playbook -i hosts playbooks/create-container.yml -e 'c_name=CS3'
+sudo ansible-playbook -i hosts playbooks/connect-l2.yml -e 'b_name=brns2 c_name=CS3 br_ip=19.1.2.1'
+
+#brns3
+sudo python3 scripts/create_subnet.py brns3 LC2
+sudo ansible-playbook -i hosts playbooks/create-container.yml -e 'c_name=CS5'
+sudo ansible-playbook -i hosts playbooks/connect-l2.yml -e 'b_name=brns3 c_name=CS5 br_ip=19.1.1.1'
+
+#vxlan
+scripts/vxlan.sh add vxlan0 42 brns1 <endpt1> brns1_br brns3 <endpt2> brns3_br
+Note: We will require to add endpt1 and endpt2 static routes to SC1 and SC2
+
+#gre
+scripts/gre_tunnel_hw4.sh add gretun1 LC1 <LC1_lo> LC2 <LC2_lo>
+Note: We have to add LC1_lo and LC2_lo static routes to SC1 and SC2
+
+##Delete scripts
+sudo docker container stop CS3
+sudo docker container rm CS3
+
+sudo docker container stop brns2
+sudo docker container rm brns2
+
+sudo docker network disconnect brns2_LC2 LC2
+sudo docker network rm brns2_LC2
+
+
+sudo docker container stop CS1
+sudo docker container rm CS1
+
+sudo docker container stop brns1
+sudo docker container rm brns1
+
+sudo docker network disconnect brns1_LC1 LC1
+sudo docker network rm brns1_LC1
+
+
+######################################################################################3
+
+
+##Initial Setup (Will also create a gre tunnel)
+sudo python3 init_topology.py SC1,SC2 LC1,LC2
+
+##CS1, CS2, Bridge
+#Always run from HW2q4 folder
+#Note: HW4q2/var/nid.txt must be present
+sudo python3 scripts/containers_br.py CS1 CS2 1
+
+##CSX, CSY, L3
+#Always run from HW2q4 folder
+#Note: HW4q2/var/nid.txt must be present
+sudo python3 scripts/containers_l3.py CS3 CS4 1
+
+##CSA, CSB, GRE
+#Always run from HW2q4 folder
+#Note: HW4q2/var/nid.txt must be present
+sudo python3 scripts/containers_gre.py CS5 CS6
+
+##CS1X, CS2X, VXLAN
+#Always run from HW2q4 folder
+#Note: HW4q2/var/nid.txt must be present
+sudo python3 scripts/containers_vxlan.py CS9 CS10

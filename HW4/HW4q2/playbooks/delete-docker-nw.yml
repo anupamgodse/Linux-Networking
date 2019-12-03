@@ -1,0 +1,13 @@
+---
+- name: Delete docker network
+  hosts: [localhost]
+  user: root
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+    
+  tasks:
+    - name: "Create network {{nw_name}}"
+      docker_network:
+        name: "{{nw_name}}"
+        state: absent
+

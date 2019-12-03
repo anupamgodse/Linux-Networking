@@ -1,0 +1,18 @@
+socket(AF_INET, SOCK_DGRAM, IPPROTO_ICMP) = -1 EACCES (Permission denied)
+socket(AF_INET, SOCK_RAW, IPPROTO_ICMP) = 3
+socket(AF_INET6, SOCK_DGRAM, IPPROTO_ICMPV6) = -1 EACCES (Permission denied)
+socket(AF_INET6, SOCK_RAW, IPPROTO_ICMPV6) = 4
+socket(AF_INET, SOCK_DGRAM, IPPROTO_IP) = 5
+connect(5, {sa_family=AF_INET, sin_port=htons(1025), sin_addr=inet_addr("8.8.8.8")}, 16) = 0
+getsockname(5, {sa_family=AF_INET, sin_port=htons(44575), sin_addr=inet_addr("192.168.122.71")}, [16]) = 0
+setsockopt(3, SOL_RAW, ICMP_FILTER, ~(1<<ICMP_ECHOREPLY|1<<ICMP_DEST_UNREACH|1<<ICMP_SOURCE_QUENCH|1<<ICMP_REDIRECT|1<<ICMP_TIME_EXCEEDED|1<<ICMP_PARAMETERPROB), 4) = 0
+setsockopt(3, SOL_IP, IP_RECVERR, [1], 4) = 0
+setsockopt(3, SOL_SOCKET, SO_SNDBUF, [324], 4) = 0
+setsockopt(3, SOL_SOCKET, SO_RCVBUF, [65536], 4) = 0
+getsockopt(3, SOL_SOCKET, SO_RCVBUF, [131072], [4]) = 0
+setsockopt(3, SOL_SOCKET, SO_TIMESTAMP, [1], 4) = 0
+setsockopt(3, SOL_SOCKET, SO_SNDTIMEO, "\1\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0", 16) = 0
+setsockopt(3, SOL_SOCKET, SO_RCVTIMEO, "\1\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0", 16) = 0
+sendto(3, "\10\0\234c\t\316\0\1\tL\330]\0\0\0\0\252P\7\0\0\0\0\0\20\21\22\23\24\25\26\27"..., 64, 0, {sa_family=AF_INET, sin_port=htons(0), sin_addr=inet_addr("8.8.8.8")}, 16) = 64
+recvmsg(3, {msg_name={sa_family=AF_INET, sin_port=htons(0), sin_addr=inet_addr("8.8.8.8")}, msg_namelen=128->16, msg_iov=[{iov_base="E\0\0T\0\0\0\0006\0019\252\10\10\10\10\300\250zG\0\0\244c\t\316\0\1\tL\330]"..., iov_len=192}], msg_iovlen=1, msg_control=[{cmsg_len=32, cmsg_level=SOL_SOCKET, cmsg_type=SCM_TIMESTAMP, cmsg_data={tv_sec=1574456329, tv_usec=488072}}], msg_controllen=32, msg_flags=0}, 0) = 84
++++ exited with 0 +++

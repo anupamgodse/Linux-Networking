@@ -1,0 +1,19 @@
+---
+- name: Connect two docker containers with an L3 network
+  hosts: [localhost]
+  user: root
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+    
+  tasks:
+    - name: "Create network {{c_name_1}}_{{c_name_2}}"
+      docker_network:
+        name: "{{c_name_1}}_{{c_name_2}}"
+
+    - name: Add containers to a network
+      docker_network:
+        name: "{{c_name_1}}_{{c_name_2}}"
+        connected:
+          - "{{c_name_1}}"
+          - "{{c_name_2}}"
+        appends: yes

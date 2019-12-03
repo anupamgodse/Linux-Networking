@@ -12,4 +12,4 @@ with open(file_name) as f:
         action=values[2].lower()
         os.system("sudo python3 scripts/containers_"+action+".py "+CS1+" "+CS2)
         
-        print("sudo python3 scripts/containers_"+action+".py "+CS1+" "+CS2)
+        #print("sudo python3 scripts/containers_"+action+".py "+CS1+" "+CS2)

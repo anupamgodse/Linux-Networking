@@ -14,7 +14,7 @@ c1=sys.argv[1]
 c2=sys.argv[2]
 
 #which leaf number to connect (optional)
-if(len(sys.argv) > 2):
+if(len(sys.argv) > 3):
     l_id = sys.argv[3]
 else:
     l_id = str(random.randint(1,2))

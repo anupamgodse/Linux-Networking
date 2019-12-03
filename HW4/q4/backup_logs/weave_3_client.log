@@ -1,0 +1,8 @@
+------------------------------------------------------------
+Client connecting to iperf-overlay-server, TCP port 5001
+TCP window size:  122 KByte (default)
+------------------------------------------------------------
+[  3] local 10.36.0.2 port 38056 connected with 10.107.93.92 port 5001
+[ ID] Interval       Transfer     Bandwidth
+[  3]  0.0-300.0 sec   862 GBytes  24.7 Gbits/sec
+[  3]  0.0-300.0 sec   862 GBytes  24.7 Gbits/sec

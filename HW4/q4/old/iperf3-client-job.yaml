@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: iperf3-client
+spec:
+  template:
+    metadata:
+      labels:
+        app: iperf3-client
+    spec:
+      containers:
+      - name: iperf3-client
+        image: networkstatic/iperf3
+        command: ["-c", "iperf3-server", "-t", "300","-i","300"]
+      restartPolicy: Never
+  backoffLimit: 4

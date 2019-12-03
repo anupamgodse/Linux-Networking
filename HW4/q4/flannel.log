@@ -1,13 +1,13 @@
-weave ouputs for iperf traffic between kubernetes pods in 2 nodes
+flannel ouputs for iperf traffic between kubernetes pods in 2 nodes
 ___________________________________________________________________________
 Server output for throughput test 1:
 ------------------------------------------------------------
 Server listening on TCP port 5001
 TCP window size: 85.3 KByte (default)
 ------------------------------------------------------------
-[  4] local 10.44.0.1 port 5001 connected with 10.36.0.1 port 36406
+[  4] local 172.16.1.13 port 5001 connected with 172.16.2.14 port 53094
 [ ID] Interval       Transfer     Bandwidth
-[  4]  0.0-300.0 sec  84.6 GBytes  2.42 Gbits/sec
+[  4]  0.0-300.0 sec  73.5 GBytes  2.10 Gbits/sec
 
 
 Client output for throughput test 1:
@@ -15,10 +15,10 @@ Client output for throughput test 1:
 Client connecting to iperf-overlay-server, TCP port 5001
 TCP window size: 45.0 KByte (default)
 ------------------------------------------------------------
-[  3] local 10.36.0.1 port 36406 connected with 10.103.126.118 port 5001
+[  3] local 172.16.2.14 port 53094 connected with 10.110.60.1 port 5001
 [ ID] Interval       Transfer     Bandwidth
-[  3]  0.0-300.0 sec  84.6 GBytes  2.42 Gbits/sec
-[  3]  0.0-300.0 sec  84.6 GBytes  2.42 Gbits/sec
+[  3]  0.0-300.0 sec  73.5 GBytes  2.10 Gbits/sec
+[  3]  0.0-300.0 sec  73.5 GBytes  2.10 Gbits/sec
 
 
 ___________________________________________________________________________
@@ -27,9 +27,9 @@ Server output for throughput test 2:
 Server listening on TCP port 5001
 TCP window size: 85.3 KByte (default)
 ------------------------------------------------------------
-[  4] local 10.36.0.1 port 5001 connected with 10.44.0.1 port 58108
+[  4] local 172.16.2.15 port 5001 connected with 172.16.1.14 port 56688
 [ ID] Interval       Transfer     Bandwidth
-[  4]  0.0-300.0 sec  78.4 GBytes  2.25 Gbits/sec
+[  4]  0.0-300.0 sec  77.4 GBytes  2.22 Gbits/sec
 
 
 Client output for throughput test 2:
@@ -37,10 +37,10 @@ Client output for throughput test 2:
 Client connecting to iperf-overlay-server, TCP port 5001
 TCP window size: 45.0 KByte (default)
 ------------------------------------------------------------
-[  3] local 10.44.0.1 port 58108 connected with 10.96.200.89 port 5001
+[  3] local 172.16.1.14 port 56688 connected with 10.108.35.144 port 5001
 [ ID] Interval       Transfer     Bandwidth
-[  3]  0.0-300.0 sec  78.4 GBytes  2.25 Gbits/sec
-[  3]  0.0-300.0 sec  78.4 GBytes  2.25 Gbits/sec
+[  3]  0.0-300.0 sec  77.4 GBytes  2.22 Gbits/sec
+[  3]  0.0-300.0 sec  77.4 GBytes  2.22 Gbits/sec
 
 
 ___________________________________________________________________________
@@ -49,20 +49,20 @@ Server output for throughput test 3:
 Server listening on TCP port 5001
 TCP window size: 85.3 KByte (default)
 ------------------------------------------------------------
-[  4] local 10.36.0.1 port 5001 connected with 10.36.0.2 port 38056
+[  4] local 172.16.1.15 port 5001 connected with 172.16.2.16 port 34722
 [ ID] Interval       Transfer     Bandwidth
-[  4]  0.0-300.0 sec   862 GBytes  24.7 Gbits/sec
+[  4]  0.0-300.0 sec  73.6 GBytes  2.11 Gbits/sec
 
 
 Client output for throughput test 3:
 ------------------------------------------------------------
 Client connecting to iperf-overlay-server, TCP port 5001
-TCP window size:  122 KByte (default)
+TCP window size: 45.0 KByte (default)
 ------------------------------------------------------------
-[  3] local 10.36.0.2 port 38056 connected with 10.107.93.92 port 5001
+[  3] local 172.16.2.16 port 34722 connected with 10.100.41.255 port 5001
 [ ID] Interval       Transfer     Bandwidth
-[  3]  0.0-300.0 sec   862 GBytes  24.7 Gbits/sec
-[  3]  0.0-300.0 sec   862 GBytes  24.7 Gbits/sec
+[  3]  0.0-300.0 sec  73.6 GBytes  2.11 Gbits/sec
+[  3]  0.0-300.0 sec  73.6 GBytes  2.11 Gbits/sec
 
 
 ___________________________________________________________________________
@@ -71,9 +71,9 @@ Server output for throughput test 4:
 Server listening on TCP port 5001
 TCP window size: 85.3 KByte (default)
 ------------------------------------------------------------
-[  4] local 10.44.0.1 port 5001 connected with 10.44.0.2 port 38260
+[  4] local 172.16.2.17 port 5001 connected with 172.16.1.16 port 50206
 [ ID] Interval       Transfer     Bandwidth
-[  4]  0.0-300.0 sec   892 GBytes  25.5 Gbits/sec
+[  4]  0.0-300.0 sec  75.0 GBytes  2.15 Gbits/sec
 
 
 Client output for throughput test 4:
@@ -81,10 +81,10 @@ Client output for throughput test 4:
 Client connecting to iperf-overlay-server, TCP port 5001
 TCP window size: 45.0 KByte (default)
 ------------------------------------------------------------
-[  3] local 10.44.0.2 port 38260 connected with 10.96.13.1 port 5001
+[  3] local 172.16.1.16 port 50206 connected with 10.109.226.11 port 5001
 [ ID] Interval       Transfer     Bandwidth
-[  3]  0.0-300.0 sec   892 GBytes  25.5 Gbits/sec
-[  3]  0.0-300.0 sec   892 GBytes  25.5 Gbits/sec
+[  3]  0.0-300.0 sec  75.0 GBytes  2.15 Gbits/sec
+[  3]  0.0-300.0 sec  75.0 GBytes  2.15 Gbits/sec
 
 
 ___________________________________________________________________________
@@ -93,9 +93,9 @@ Server output for throughput test 5:
 Server listening on TCP port 5001
 TCP window size: 85.3 KByte (default)
 ------------------------------------------------------------
-[  4] local 10.36.0.1 port 5001 connected with 10.44.0.1 port 38480
+[  4] local 172.16.1.17 port 5001 connected with 172.16.2.18 port 53918
 [ ID] Interval       Transfer     Bandwidth
-[  4]  0.0-300.0 sec  78.4 GBytes  2.24 Gbits/sec
+[  4]  0.0-300.0 sec  74.9 GBytes  2.14 Gbits/sec
 
 
 Client output for throughput test 5:
@@ -103,10 +103,10 @@ Client output for throughput test 5:
 Client connecting to iperf-overlay-server, TCP port 5001
 TCP window size: 45.0 KByte (default)
 ------------------------------------------------------------
-[  3] local 10.44.0.1 port 38480 connected with 10.105.134.153 port 5001
+[  3] local 172.16.2.18 port 53918 connected with 10.111.203.181 port 5001
 [ ID] Interval       Transfer     Bandwidth
-[  3]  0.0-300.0 sec  78.4 GBytes  2.24 Gbits/sec
-[  3]  0.0-300.0 sec  78.4 GBytes  2.24 Gbits/sec
+[  3]  0.0-300.0 sec  74.9 GBytes  2.14 Gbits/sec
+[  3]  0.0-300.0 sec  74.9 GBytes  2.14 Gbits/sec
 
 
 ___________________________________________________________________________
@@ -115,9 +115,9 @@ Server output for throughput test 6:
 Server listening on TCP port 5001
 TCP window size: 85.3 KByte (default)
 ------------------------------------------------------------
-[  4] local 10.36.0.1 port 5001 connected with 10.44.0.1 port 46788
+[  4] local 172.16.1.18 port 5001 connected with 172.16.2.19 port 40820
 [ ID] Interval       Transfer     Bandwidth
-[  4]  0.0-300.0 sec  78.3 GBytes  2.24 Gbits/sec
+[  4]  0.0-300.0 sec  74.0 GBytes  2.12 Gbits/sec
 
 
 Client output for throughput test 6:
@@ -125,10 +125,10 @@ Client output for throughput test 6:
 Client connecting to iperf-overlay-server, TCP port 5001
 TCP window size: 45.0 KByte (default)
 ------------------------------------------------------------
-[  3] local 10.44.0.1 port 46788 connected with 10.107.91.36 port 5001
+[  3] local 172.16.2.19 port 40820 connected with 10.101.23.193 port 5001
 [ ID] Interval       Transfer     Bandwidth
-[  3]  0.0-300.0 sec  78.3 GBytes  2.24 Gbits/sec
-[  3]  0.0-300.0 sec  78.3 GBytes  2.24 Gbits/sec
+[  3]  0.0-300.0 sec  74.0 GBytes  2.12 Gbits/sec
+[  3]  0.0-300.0 sec  74.0 GBytes  2.12 Gbits/sec
 
 
 ___________________________________________________________________________
@@ -137,20 +137,20 @@ Server output for throughput test 7:
 Server listening on TCP port 5001
 TCP window size: 85.3 KByte (default)
 ------------------------------------------------------------
-[  4] local 10.36.0.1 port 5001 connected with 10.36.0.2 port 51092
+[  4] local 172.16.1.19 port 5001 connected with 172.16.2.20 port 33456
 [ ID] Interval       Transfer     Bandwidth
-[  4]  0.0-300.0 sec   870 GBytes  24.9 Gbits/sec
+[  4]  0.0-300.0 sec  74.7 GBytes  2.14 Gbits/sec
 
 
 Client output for throughput test 7:
 ------------------------------------------------------------
 Client connecting to iperf-overlay-server, TCP port 5001
-TCP window size: 72.0 KByte (default)
+TCP window size: 45.0 KByte (default)
 ------------------------------------------------------------
-[  3] local 10.36.0.2 port 51092 connected with 10.103.43.83 port 5001
+[  3] local 172.16.2.20 port 33456 connected with 10.97.232.114 port 5001
 [ ID] Interval       Transfer     Bandwidth
-[  3]  0.0-300.0 sec   870 GBytes  24.9 Gbits/sec
-[  3]  0.0-300.0 sec   870 GBytes  24.9 Gbits/sec
+[  3]  0.0-300.0 sec  74.7 GBytes  2.14 Gbits/sec
+[  3]  0.0-300.0 sec  74.7 GBytes  2.14 Gbits/sec
 
 
 ___________________________________________________________________________
@@ -159,9 +159,9 @@ Server output for throughput test 8:
 Server listening on TCP port 5001
 TCP window size: 85.3 KByte (default)
 ------------------------------------------------------------
-[  4] local 10.44.0.1 port 5001 connected with 10.36.0.1 port 59182
+[  4] local 172.16.2.21 port 5001 connected with 172.16.1.20 port 37134
 [ ID] Interval       Transfer     Bandwidth
-[  4]  0.0-300.0 sec  84.9 GBytes  2.43 Gbits/sec
+[  4]  0.0-300.0 sec  77.2 GBytes  2.21 Gbits/sec
 
 
 Client output for throughput test 8:
@@ -169,10 +169,10 @@ Client output for throughput test 8:
 Client connecting to iperf-overlay-server, TCP port 5001
 TCP window size: 45.0 KByte (default)
 ------------------------------------------------------------
-[  3] local 10.36.0.1 port 59182 connected with 10.101.93.133 port 5001
+[  3] local 172.16.1.20 port 37134 connected with 10.108.147.122 port 5001
 [ ID] Interval       Transfer     Bandwidth
-[  3]  0.0-300.0 sec  84.9 GBytes  2.43 Gbits/sec
-[  3]  0.0-300.0 sec  84.9 GBytes  2.43 Gbits/sec
+[  3]  0.0-300.0 sec  77.2 GBytes  2.21 Gbits/sec
+[  3]  0.0-300.0 sec  77.2 GBytes  2.21 Gbits/sec
 
 
 ___________________________________________________________________________
@@ -181,9 +181,9 @@ Server output for throughput test 9:
 Server listening on TCP port 5001
 TCP window size: 85.3 KByte (default)
 ------------------------------------------------------------
-[  4] local 10.44.0.1 port 5001 connected with 10.44.0.2 port 38710
+[  4] local 172.16.2.22 port 5001 connected with 172.16.1.21 port 48994
 [ ID] Interval       Transfer     Bandwidth
-[  4]  0.0-300.0 sec   898 GBytes  25.7 Gbits/sec
+[  4]  0.0-300.0 sec  77.5 GBytes  2.22 Gbits/sec
 
 
 Client output for throughput test 9:
@@ -191,10 +191,10 @@ Client output for throughput test 9:
 Client connecting to iperf-overlay-server, TCP port 5001
 TCP window size: 45.0 KByte (default)
 ------------------------------------------------------------
-[  3] local 10.44.0.2 port 38710 connected with 10.101.134.198 port 5001
+[  3] local 172.16.1.21 port 48994 connected with 10.102.35.32 port 5001
 [ ID] Interval       Transfer     Bandwidth
-[  3]  0.0-300.0 sec   898 GBytes  25.7 Gbits/sec
-[  3]  0.0-300.0 sec   898 GBytes  25.7 Gbits/sec
+[  3]  0.0-300.0 sec  77.5 GBytes  2.22 Gbits/sec
+[  3]  0.0-300.0 sec  77.5 GBytes  2.22 Gbits/sec
 
 
 ___________________________________________________________________________
@@ -203,9 +203,9 @@ Server output for throughput test 10:
 Server listening on TCP port 5001
 TCP window size: 85.3 KByte (default)
 ------------------------------------------------------------
-[  4] local 10.44.0.1 port 5001 connected with 10.36.0.1 port 38564
+[  4] local 172.16.1.22 port 5001 connected with 172.16.2.23 port 38478
 [ ID] Interval       Transfer     Bandwidth
-[  4]  0.0-300.0 sec  84.7 GBytes  2.43 Gbits/sec
+[  4]  0.0-300.0 sec  74.7 GBytes  2.14 Gbits/sec
 
 
 Client output for throughput test 10:
@@ -213,9 +213,9 @@ Client output for throughput test 10:
 Client connecting to iperf-overlay-server, TCP port 5001
 TCP window size: 45.0 KByte (default)
 ------------------------------------------------------------
-[  3] local 10.36.0.1 port 38564 connected with 10.105.65.15 port 5001
+[  3] local 172.16.2.23 port 38478 connected with 10.103.169.176 port 5001
 [ ID] Interval       Transfer     Bandwidth
-[  3]  0.0-300.0 sec  84.7 GBytes  2.43 Gbits/sec
-[  3]  0.0-300.0 sec  84.7 GBytes  2.43 Gbits/sec
+[  3]  0.0-300.0 sec  74.7 GBytes  2.14 Gbits/sec
+[  3]  0.0-300.0 sec  74.7 GBytes  2.14 Gbits/sec
 
 

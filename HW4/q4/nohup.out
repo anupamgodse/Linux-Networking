@@ -1,183 +1,60 @@
-unable to recognize "iperf-server.yaml": Get http://localhost:8080/api?timeout=32s: dial tcp [::1]:8080: connect: connection refused
-unable to recognize "iperf-server.yaml": Get http://localhost:8080/api?timeout=32s: dial tcp [::1]:8080: connect: connection refused
-error: unable to recognize "iperf-client-job.yaml": Get http://localhost:8080/api?timeout=32s: dial tcp [::1]:8080: connect: connection refused
 pod/iperf-overlay-server created
 service/iperf-overlay-server created
 job.batch/iperf-overlay-client created
+job.batch "iperf-overlay-client" deleted
 pod "iperf-overlay-server" deleted
 service "iperf-overlay-server" deleted
-job.batch "iperf-overlay-client" deleted
 pod/iperf-overlay-server created
 service/iperf-overlay-server created
 job.batch/iperf-overlay-client created
+job.batch "iperf-overlay-client" deleted
 pod "iperf-overlay-server" deleted
 service "iperf-overlay-server" deleted
-job.batch "iperf-overlay-client" deleted
 pod/iperf-overlay-server created
 service/iperf-overlay-server created
 job.batch/iperf-overlay-client created
+job.batch "iperf-overlay-client" deleted
 pod "iperf-overlay-server" deleted
 service "iperf-overlay-server" deleted
-job.batch "iperf-overlay-client" deleted
 pod/iperf-overlay-server created
 service/iperf-overlay-server created
 job.batch/iperf-overlay-client created
+job.batch "iperf-overlay-client" deleted
 pod "iperf-overlay-server" deleted
 service "iperf-overlay-server" deleted
-job.batch "iperf-overlay-client" deleted
 pod/iperf-overlay-server created
 service/iperf-overlay-server created
 job.batch/iperf-overlay-client created
+job.batch "iperf-overlay-client" deleted
 pod "iperf-overlay-server" deleted
 service "iperf-overlay-server" deleted
-job.batch "iperf-overlay-client" deleted
 pod/iperf-overlay-server created
 service/iperf-overlay-server created
 job.batch/iperf-overlay-client created
+job.batch "iperf-overlay-client" deleted
 pod "iperf-overlay-server" deleted
 service "iperf-overlay-server" deleted
-job.batch "iperf-overlay-client" deleted
 pod/iperf-overlay-server created
 service/iperf-overlay-server created
 job.batch/iperf-overlay-client created
+job.batch "iperf-overlay-client" deleted
 pod "iperf-overlay-server" deleted
 service "iperf-overlay-server" deleted
-job.batch "iperf-overlay-client" deleted
 pod/iperf-overlay-server created
 service/iperf-overlay-server created
 job.batch/iperf-overlay-client created
+job.batch "iperf-overlay-client" deleted
 pod "iperf-overlay-server" deleted
 service "iperf-overlay-server" deleted
-job.batch "iperf-overlay-client" deleted
 pod/iperf-overlay-server created
 service/iperf-overlay-server created
 job.batch/iperf-overlay-client created
+job.batch "iperf-overlay-client" deleted
 pod "iperf-overlay-server" deleted
 service "iperf-overlay-server" deleted
-job.batch "iperf-overlay-client" deleted
 pod/iperf-overlay-server created
 service/iperf-overlay-server created
 job.batch/iperf-overlay-client created
+job.batch "iperf-overlay-client" deleted
 pod "iperf-overlay-server" deleted
 service "iperf-overlay-server" deleted
-job.batch "iperf-overlay-client" deleted
-pod/iperf-overlay-server created
-service/iperf-overlay-server created
-job.batch/iperf-overlay-client created
-Error from server (NotFound): error when deleting "iperf-server.yaml": pods "iperf-overlay-server" not found
-Error from server (NotFound): error when deleting "iperf-server.yaml": services "iperf-overlay-server" not found
-Error from server (NotFound): error when deleting "iperf-client-job.yaml": jobs.batch "iperf-overlay-client" not found
-pod/iperf-overlay-server created
-service/iperf-overlay-server created
-job.batch/iperf-overlay-client created
-service "iperf-overlay-server" deleted
-Error from server (NotFound): error when deleting "iperf-server.yaml": pods "iperf-overlay-server" not found
-job.batch "iperf-overlay-client" deleted
-pod/iperf-overlay-server created
-service/iperf-overlay-server created
-job.batch/iperf-overlay-client created
-pod "iperf-overlay-server" deleted
-service "iperf-overlay-server" deleted
-job.batch "iperf-overlay-client" deleted
-pod/iperf-overlay-server created
-service/iperf-overlay-server created
-job.batch/iperf-overlay-client created
-pod "iperf-overlay-server" deleted
-service "iperf-overlay-server" deleted
-job.batch "iperf-overlay-client" deleted
-pod/iperf-overlay-server created
-service/iperf-overlay-server created
-job.batch/iperf-overlay-client created
-pod "iperf-overlay-server" deleted
-service "iperf-overlay-server" deleted
-job.batch "iperf-overlay-client" deleted
-pod/iperf-overlay-server created
-service/iperf-overlay-server created
-job.batch/iperf-overlay-client created
-pod "iperf-overlay-server" deleted
-service "iperf-overlay-server" deleted
-job.batch "iperf-overlay-client" deleted
-pod/iperf-overlay-server created
-service/iperf-overlay-server created
-job.batch/iperf-overlay-client created
-pod/iperf-overlay-server created
-service/iperf-overlay-server created
-job.batch/iperf-overlay-client created
-pod "iperf-overlay-server" deleted
-service "iperf-overlay-server" deleted
-job.batch "iperf-overlay-client" deleted
-pod/iperf-overlay-server created
-service/iperf-overlay-server created
-job.batch/iperf-overlay-client created
-pod "iperf-overlay-server" deleted
-service "iperf-overlay-server" deleted
-job.batch "iperf-overlay-client" deleted
-pod/iperf-overlay-server created
-service/iperf-overlay-server created
-job.batch/iperf-overlay-client created
-pod "iperf-overlay-server" deleted
-service "iperf-overlay-server" deleted
-job.batch "iperf-overlay-client" deleted
-pod/iperf-overlay-server created
-service/iperf-overlay-server created
-job.batch/iperf-overlay-client created
-pod "iperf-overlay-server" deleted
-service "iperf-overlay-server" deleted
-job.batch "iperf-overlay-client" deleted
-pod/iperf-overlay-server created
-service/iperf-overlay-server created
-job.batch/iperf-overlay-client created
-pod "iperf-overlay-server" deleted
-service "iperf-overlay-server" deleted
-job.batch "iperf-overlay-client" deleted
-pod/iperf-overlay-server created
-service/iperf-overlay-server created
-job.batch/iperf-overlay-client created
-pod "iperf-overlay-server" deleted
-service "iperf-overlay-server" deleted
-job.batch "iperf-overlay-client" deleted
-pod/iperf-overlay-server created
-service/iperf-overlay-server created
-job.batch/iperf-overlay-client created
-pod "iperf-overlay-server" deleted
-service "iperf-overlay-server" deleted
-job.batch "iperf-overlay-client" deleted
-Error from server (NotFound): error when deleting "iperf-server.yaml": pods "iperf-overlay-server" not found
-Error from server (NotFound): error when deleting "iperf-server.yaml": services "iperf-overlay-server" not found
-Error from server (NotFound): error when deleting "iperf-client-job.yaml": jobs.batch "iperf-overlay-client" not found
-pod/iperf-overlay-server created
-service/iperf-overlay-server created
-job.batch/iperf-overlay-client created
-pod "iperf-overlay-server" deleted
-service "iperf-overlay-server" deleted
-job.batch "iperf-overlay-client" deleted
-pod/iperf-overlay-server created
-service/iperf-overlay-server created
-job.batch/iperf-overlay-client created
-pod "iperf-overlay-server" deleted
-service "iperf-overlay-server" deleted
-job.batch "iperf-overlay-client" deleted
-pod/iperf-overlay-server created
-service/iperf-overlay-server created
-job.batch/iperf-overlay-client created
-pod "iperf-overlay-server" deleted
-service "iperf-overlay-server" deleted
-job.batch "iperf-overlay-client" deleted
-pod/iperf-overlay-server created
-service/iperf-overlay-server created
-job.batch/iperf-overlay-client created
-pod "iperf-overlay-server" deleted
-service "iperf-overlay-server" deleted
-job.batch "iperf-overlay-client" deleted
-pod/iperf-overlay-server created
-service/iperf-overlay-server created
-job.batch/iperf-overlay-client created
-pod "iperf-overlay-server" deleted
-service "iperf-overlay-server" deleted
-Error from server (NotFound): error when deleting "iperf-client-job.yaml": jobs.batch "iperf-overlay-client" not found
-pod/iperf-overlay-server created
-service/iperf-overlay-server created
-job.batch/iperf-overlay-client created
-pod "iperf-overlay-server" deleted
-service "iperf-overlay-server" deleted
-job.batch "iperf-overlay-client" deleted

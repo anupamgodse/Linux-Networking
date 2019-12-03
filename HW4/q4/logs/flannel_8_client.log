@@ -1,4 +1,8 @@
-error: Try again
-error: Try again
-error: Try again
-error: Try again
+------------------------------------------------------------
+Client connecting to iperf-overlay-server, TCP port 5001
+TCP window size: 45.0 KByte (default)
+------------------------------------------------------------
+[  3] local 172.16.1.20 port 37134 connected with 10.108.147.122 port 5001
+[ ID] Interval       Transfer     Bandwidth
+[  3]  0.0-300.0 sec  77.2 GBytes  2.21 Gbits/sec
+[  3]  0.0-300.0 sec  77.2 GBytes  2.21 Gbits/sec

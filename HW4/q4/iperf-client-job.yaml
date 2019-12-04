@@ -11,6 +11,6 @@ spec:
       containers:
       - name: iperf-overlay-client
         image: jmarhee/iperf:latest
-        command: ["iperf", "-c", "iperf-overlay-server", "-t", "300","-i","300"]
+        command: ["iperf", "-c", "iperf-overlay-server", "-t", "300","-i","300","-u"]
       restartPolicy: Never
   backoffLimit: 4

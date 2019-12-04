@@ -1,0 +1,142 @@
+sudo su root
+sudo systemctl stop firewalld
+sudo systemctl disable firewalld
+sudo systemctl mask --now firewalld
+sudo setenforce 0
+sudo sed -i --follow-symlinks 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/sysconfig/selinux
+
+vim /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg
+        https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+
+yum install kubeadm docker -y
+
+systemctl restart docker && systemctl enable docker
+
+systemctl  restart kubelet && systemctl enable kubelet
+
+kubeadm init
+
+mkdir -p $HOME/.kube
+cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+chown $(id -u):$(id -g) $HOME/.kube/config
+export kubever=$(kubectl version | base64 | tr -d '\n')
+
+kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$kubever"
+
+kubectl get nodes
+
+kubectl  get pods  --all-namespaces
+
+
+
+
+
+10.142.0.17 k8s-master.us-east1-b.c.anki-259509.internal k8s-master
+10.142.0.18 worker1.us-east1-b.c.anki-259509.internal worker1
+10.142.0.19 worker2.us-east1-b.c.anki-259509.internal worker2
+
+sudo ssh -i ~/.ssh/yk yjkamdar@35.227.65.251
+sudo ssh -i ~/.ssh/yk yjkamdar@35.231.14.9
+
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: iperf-overlay-client
+spec:
+  template:
+    metadata:
+      labels:
+        app: iperf-overlay-client
+    spec:
+      containers:
+      - name: iperf-overlay-client
+        image: jmarhee/iperf:latest
+        command: ["iperf", "-c", "iperf-overlay-server", "-P", "10"]
+      restartPolicy: Never
+  backoffLimit: 4
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: iperf-overlay-server
+  labels:
+    app: iperf-overlay-server
+spec:
+  containers:
+  - name: iperf-overlay-server
+    image: jmarhee/iperf:latest
+    command: ["iperf","-s",">>","/mnt/iperf-data"]
+    volumeMounts:
+    - name: iperf-data
+      mountPath: /mnt/iperf-data
+    ports:
+    - containerPort: 5001
+  volumes:
+  - name: iperf-data
+    emptyDir: {}
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: iperf-overlay-server
+spec:
+  selector:
+    app: iperf-overlay-server
+  ports:
+  - protocol: TCP
+    port: 5001
+    targetPort: 5001
+
+sudo kubectl apply -f iperf-server.yaml
+sudo kubectl create -f iperf-client-job.yaml
+sudo kubectl logs -l app=iperf-overlay-server
+sudo kubectl logs -l app=iperf-overlay-client
+
+
+
+strace -c -o client.txt iperf3 -c IP -u -b 200G -i 10
+
+docker run  -it --rm --name=iperf3-server -p 5201:5201 networkstatic/iperf3 -s
+
+docker run  -it --rm networkstatic/iperf3 -c 172.17.0.163 -t 300
+
+
+sudo kubectl apply -f iperf3-server.yaml
+sudo kubectl create -f iperf3-client-job.yaml
+
+
+
+
+
+
+
+sudo kubectl apply -f iperf-server.yaml
+sudo kubectl apply -f iperf-client-job.yaml
+
+sudo kubectl get pods
+
+
+kubectl logs -l app=iperf-overlay-server
+kubectl logs -l app=iperf-overlay-client
+
+
+sudo kubectl logs -l app=flannel
+
+
+sudo kubectl delete -f iperf-server.yaml
+sudo kubectl delete -f iperf-client-job.yaml
+
+
+
+sudo kubeadm join 10.142.0.17:6443 --token xxxxxxxxxxxx \
+    --discovery-token-ca-cert-hash sha256:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
